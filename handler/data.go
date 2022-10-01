@@ -25,7 +25,7 @@ func HandlerDataImage(DataImageRepository repositories.DataImageRepository) *han
 func (h *handlerImage) FindDatas(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	dKendaraan, err := h.DataImageRepository.FindDatas()
+	dimage, err := h.DataImageRepository.FindDatas()
 	if err != nil {
 		w.WriteHeader(http.StatusForbidden)
 		response := dto.ErrorResult{Code: http.StatusForbidden, Message: err.Error()}
@@ -33,7 +33,7 @@ func (h *handlerImage) FindDatas(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
-	response := dto.SuccessResult{Code: http.StatusOK, Data: dKendaraan}
+	response := dto.SuccessResult{Code: http.StatusOK, Data: dimage}
 	json.NewEncoder(w).Encode(response)
 }
 
@@ -43,7 +43,7 @@ func (h *handlerImage) GetData(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(mux.Vars(r)["id"])
 
 	//var kendaraan models.DataKendaraan
-	kendaraan, err := h.DataImageRepository.GetData(id)
+	dimage, err := h.DataImageRepository.GetData(id)
 	if err != nil {
 		w.WriteHeader(http.StatusForbidden)
 		response := dto.ErrorResult{Code: http.StatusForbidden, Message: err.Error()}
@@ -52,7 +52,7 @@ func (h *handlerImage) GetData(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
-	response := dto.SuccessResult{Code: http.StatusOK, Data: convertResponseImage(kendaraan)}
+	response := dto.SuccessResult{Code: http.StatusOK, Data: convertResponseImage(dimage)}
 	json.NewEncoder(w).Encode(response)
 }
 
